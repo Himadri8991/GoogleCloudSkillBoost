@@ -1,0 +1,113 @@
+task 1:-
+To create an API key, navigate to: Navigation Menu > APIs & services > Credentials
+Click + Create
+select API key
+copy the key you just generated and click Close
+
+Run the following in Cloud Shell, replacing <your_api_key> with the key you just copied:
+export API_KEY=<YOUR_API_KEY>
+
+
+
+
+task 2:-
+Run the following in Cloud Shell..
+
+nano request.json
+then,
+{
+  "requests": [
+      {
+        "image": {
+          "source": {
+              "gcsImageUri": 
+          }
+        },
+        "features": [
+          {
+            "type": 
+            "maxResults": 10
+          }
+        ]
+      }
+  ]
+}
+then press,
+Ctrl+x > y > enter
+
+
+
+
+task 3:-
+Navigation Menu > cloud storage > Buckets
+1 Bucket is already exist 
+click on that
+then 'manif-des-sans-papiers.jpg' already uploaded click on that (and make sure it's have public access. / if not then click the 3dots of 'manif-des-sans-papiers.jpg' > edit access > +add entry > Entity- public, Name- allUsers, Access- Reader)
+copy gsutil URI.
+
+Run the following in Cloud Shell..
+nano request.json
+clear the previous one. and Run the following, replacing <gsutil URI> with the url you just copied:
+
+{
+  "requests": [
+      {
+        "image": {
+          "source": {
+              "gcsImageUri": "<gsutil URI>"
+          }
+        },
+        "features": [
+          {
+            "type": "TEXT_DETECTION",
+            "maxResults": 10
+          }
+        ]
+      }
+  ]
+}
+then press,
+Ctrl+x > y > enter
+
+Run the following in Cloud Shell..(no change)
+curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json  https://vision.googleapis.com/v1/images:annotate?key=${API_KEY}
+
+Run the following in Cloud Shell..(no change)
+curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json  https://vision.googleapis.com/v1/images:annotate?key=${API_KEY} -o text-response.json
+
+Run the following in Cloud Shell, replacing <project id> with your project id you can copy from left side from where you copy your mail id and password
+gsutil cp text-response.json gs://<project id>-bucket
+
+Run the following in Cloud Shell, replacing <gsutil URI> with the url you copied:
+
+nano request.json
+then,
+{
+  "requests": [
+      {
+        "image": {
+          "source": {
+              "gcsImageUri": "<gsutil URI>"
+          }
+        },
+        "features": [
+          {
+            "type": "LANDMARK_DETECTION",
+            "maxResults": 10
+          }
+        ]
+      }
+  ]
+}
+then press,
+Ctrl+x > y > enter
+
+then, run the following in Cloud Shell..(no change)
+curl -s -X POST -H "Content-Type: application/json" --data-binary @request.json  https://vision.googleapis.com/v1/images:annotate?key=${API_KEY} -o landmark-response.json
+
+Run the following in Cloud Shell, replacing <project id> with your project id you can copy from left side from where you copy your mail id and password
+gsutil cp landmark-response.json gs://<project id>-bucket
+
+
+
+Congratulations!
