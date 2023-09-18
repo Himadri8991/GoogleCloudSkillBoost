@@ -1,0 +1,67 @@
+Start The Lab
+Open Google Cloud Console with username 1
+then go to the Task 1
+
+
+
+Task 1
+
+copy the buckets name 
+then switch to the next tab
+navigation menu > cloud storage > Buckets > create
+then paste the buckets name
+Continue > Continue > Continue
+in "Choose how to control access to objects" 
+"UNCHECK" Enforce public access prevention on this bucket
+Select "Fine-grained"
+Continue > create
+
+
+
+Task 2
+
+Copy topic id
+then switch to the next tab
+Search for Pub/Sub Click on it
+Create Topic
+paste topic id > Create
+
+
+
+Task 3
+
+Search for Cloud Functions
+Go to Cloud Functions
+Create Function
+Set the environment to 2nd gen.
+Function Name: <Cloud Function Name provided in lab instructions>
+Region: <enter the dynamically populated REGION in the lab>
+To set the Trigger type to Cloud Storage, Click ADD TRIGGER and select Cloud Storage Trigger.
+Ensure that the Event Type is selected as google.cloud.storage.object.v1.finalized
+Browse the bucket you have created and click Save Trigger.
+Click on Next
+Set Runtime as Node.js 14
+Then, from lab instructions, replace code for index.js and package.json
+Set Entry point to <Cloud Function Name provided in lab instructions>
+Then, Click Deploy.
+
+****this lab is facing some issues, if your deploy failed then please go to edit & deploy
+then next > deploy (without any changes)
+after some attempt you win!!!!
+
+Check the score for Task 3
+
+
+
+Skip Task 4
+
+
+
+Task 5
+
+copy the username 2
+navigation menu > IAM & Admin > IAM 
+paste the username 2 in the filter section and select it > remove access
+
+
+Congratulation!
