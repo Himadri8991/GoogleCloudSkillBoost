@@ -1,0 +1,34 @@
+{ ****go navigation menu > compute engine > copy the zone from instance
+***and if "bastion" instance's status is stop then click on the 3 dots and start it
+**copy "IAP network tag" , "internal network tag" , "HTTP network tag" from the lab, under the project id. from the left panel, from where you copy the username and password }
+
+
+
+
+
+
+export IAP_NETWORK_TAG=
+export INTERNAL_NETWORK_TAG=
+export HTTP_NETWORK_TAG=
+export ZONE=
+
+gcloud compute firewall-rules delete open-access
+gcloud compute firewall-rules create ssh-ingress --allow=tcp:22 --source-ranges 35.235.240.0/20 --target-tags $IAP_NETWORK_TAG --network acme-vpc
+gcloud compute instances add-tags bastion --tags=$IAP_NETWORK_TAG --zone=$ZONE
+gcloud compute firewall-rules create http-ingress --allow=tcp:80 --source-ranges 0.0.0.0/0 --target-tags $HTTP_NETWORK_TAG --network acme-vpc 
+gcloud compute instances add-tags juice-shop --tags=$HTTP_NETWORK_TAG --zone=$ZONE
+gcloud compute firewall-rules create internal-ssh-ingress --allow=tcp:22 --source-ranges 192.168.10.0/24 --target-tags $INTERNAL_NETWORK_TAG --network acme-vpc
+gcloud compute instances add-tags juice-shop --tags=$INTERNAL_NETWORK_TAG --zone=$ZONE
+
+
+{ **Authorize > if ask press y > enter
+*** navigation menu > compute engine > instance name "bastion" > press the side arrow of SSH > View gcloud command > copy the code and run in cloud shell
+Then y > enter > enter > enter }
+
+
+gcloud compute ssh juice-shop --internal-ip
+
+{ Then y > enter > enter > enter > y > enter }
+
+Congratulations! 
+after 1 min you can checked all the task
